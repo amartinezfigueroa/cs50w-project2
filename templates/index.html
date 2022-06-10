@@ -7,11 +7,11 @@
 
 {% block body %}
 
-    <form>
-        <div class="form-group margen" >
-        <label for="exampleFormControlInput1">Ingrese un nombre</label>
-        <input type="text" id="exampleFormControlInput1" name="nombre" placeholder="Nombre">
-        </div>
+    <h1>Ingrese un nombre</h1>
+    <form id="new-user" class="form-group">
+        <input id="user" autocomplete="off" class="margen" autofocus placeholder="Nombre" type="text">
+        <input type="submit">
     </form>
+  
 
 {% endblock %}

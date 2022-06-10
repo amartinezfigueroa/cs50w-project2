@@ -15,20 +15,29 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 socketio = SocketIO(app)
 
+lista_user= []
+
 @app.route("/")
 def index():
     return render_template("index.html")
 
-@app.route("/nombrevisual",methods=["POST" , "GET"])
-def nombrevisual():
+#servidor
+#@socketio.on('my event')
+#def handle_message(data):
+  #  print('received message: ' + data)
+   # emit('my response', data)
 
-    if request.method == "POST":
-
-        if not request.form.get("nombre"):
-            flash("Llenar el campo solicitado")
-            return render_template("nombrevisual.html")
-
-            usuarios = request.form.get("nombre")
-        
+@socketio.on('senduser')
+def recibir_usuario(nombre):
+    
+    if nombre in lista_user:
+        print(nombre)
+        emit('Mensajes de alerta', "Este usuario ya existe")
     else:
-        return "hi"
+        lista_user.append(nombre)
+        emit('Registrar usuario', nombre)
+    
+
+
+if __name__ == '__main__':
+    socketio.run(app)
